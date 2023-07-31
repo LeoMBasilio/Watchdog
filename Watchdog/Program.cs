@@ -19,8 +19,8 @@ namespace Watchdog
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         const int SW_HIDE = 0;
 
-        const string uri = @"C:\Program Files (x86)\MonitoraYou\MonitoraYou_v2.exe";
-        private const string uriOut = @"C:\Program Files (x86)\MonitoraYou\out.txt";
+        const string uri = @"caminho do programa a ser aberto";
+        private const string uriOut = @"caminho de saida em json";
         static string output = "", output1 = "", output2 = "", output3 = "";
         
 
@@ -50,7 +50,7 @@ namespace Watchdog
 
         private static string tracert()
         {
-            String[] _gateway = {"206.1.95.138","177.10.171.34","177.10.171.50","177.71.68.114"};
+            String[] _gateway = {"enderecos para verificacao"};
             ProcessStartInfo startInfo;
             Process process;
 
@@ -86,14 +86,14 @@ namespace Watchdog
             process.WaitForExit();
             output3 = process.StandardOutput.ReadToEnd();
 
-            return "{\"jbm\":\"" + output + "\",\"quickvr\":\"" + output1 + "\",\"quickpr\":\"" + output2 + "\",\"prinse\":\"" + output3 + "\"}";
+            return "{\"provedor\":\"" + output + "\",\"provedor\":\"" + output1 + "\",\"provedor\":\"" + output2 + "\",\"provedor\":\"" + output3 + "\"}";
         }
 
         private static void verify()
         {
             try
             {
-                string _nomeProcesso = "MonitoraYou_v2";
+                string _nomeProcesso = "processo a ser monitorado";
 
                 // Obtém todos os processos com o nome do atual
                 Process[] processes = Process.GetProcessesByName(_nomeProcesso);
@@ -109,7 +109,7 @@ namespace Watchdog
 
                 if ((nome.Contains("Fortinet SSL VPN Virtual Ethernet Adapter") != true))
                 {
-                    System.Diagnostics.Process.Start("powershell.exe", "taskkill -f -im MonitoraYou*").WaitForExit();
+                    System.Diagnostics.Process.Start("powershell.exe", "taskkill -f -im " + _nomeProcesso).WaitForExit();
                 }
                 else if ((nome.Contains("Fortinet SSL VPN Virtual Ethernet Adapter") == true) && (status.Contains("Up") == true))
                 {
